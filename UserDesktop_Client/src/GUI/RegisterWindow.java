@@ -30,9 +30,10 @@ public class RegisterWindow extends JFrame {
 
 
 	public RegisterWindow(Controller controller) {
+		this.controller = controller; 
 
 		setSize(600,400);
-		setLocation(300, 200);
+		setLocation(700, 200);
 
 		setTitle("Registro");
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
@@ -100,7 +101,7 @@ public class RegisterWindow extends JFrame {
 	
 
 		bRegister.addActionListener((ActionEvent e) -> {Registrar();} ); 
-
+		setVisible(true);
 	}
 
 
@@ -108,18 +109,20 @@ public class RegisterWindow extends JFrame {
 
 	public void Registrar() {
 		controller.registerUser(tfEmail.getText().toLowerCase(), tfPassword.getText(), tfCardNumber.getText(), tfDefaultAirport.getText(), tfAuthorizationSystem.getText());
+		
+		/*
 		Thread t1 = new Thread() {
 			public void run() {
 				setVisible(false);
 				//SearchFlight.main(null); 
-				//controller.sfw.setVisible(true);
+				controller.sfw.setVisible(true);
 	
 				dispose();
 			}				
 		}; 
 		t1.start();
 	
-
+		*/
 
 	}
 	

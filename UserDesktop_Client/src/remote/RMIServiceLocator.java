@@ -2,7 +2,7 @@ package remote;
 
 import java.util.HashMap;
 
-
+import server.remote.IReservationManager; 
 
 public class RMIServiceLocator {
 
@@ -25,7 +25,7 @@ public class RMIServiceLocator {
 			try {
 				String name = "//" + ip + ":" + port + "/" + serviceName;
 				
-				serviceMap.put(serviceName, (IReservationmanager)java.rmi.Naming.lookup(name)); 
+				serviceMap.put(serviceName, (IReservationManager)java.rmi.Naming.lookup(name)); 
 				service = serviceMap.get(serviceName); 
 
 			} catch (Exception e) {

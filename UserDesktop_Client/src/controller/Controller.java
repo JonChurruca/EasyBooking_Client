@@ -7,28 +7,37 @@ import java.util.List;
 
 import GUI.LogInWindow;
 import GUI.RegisterWindow;
-import GUI.SearchFlightWindow;
+
 import remote.RMIServiceLocator;
+import server.datanucleous.FlightDTO;
+
 
 public class Controller {
 	@SuppressWarnings("unused")
+	private static final long serialVersionUID = 1L;
 	private RMIServiceLocator rsl;
+	public LogInWindow lw; 
 	public RegisterWindow rw; 
-	public SearchFlightWindow sfw; 
+	
+	
+	
+ 
 	
 	public Controller(String[] args) throws RemoteException {
 
 
 		rsl = new RMIServiceLocator(); 
 		rsl.setService(args[0], args[1], args[2]);
-
-		new LogInWindow(this);
 		
+		lw = new LogInWindow(this);
 		rw = new RegisterWindow(this); 
-		rw.setVisible(false);
+		//new SearchFlightWindow(this); 
 		
-		sfw = new SearchFlightWindow(this); 
-		sfw.setVisible(true);
+		//rw = new RegisterWindow(this); 
+		//rw.setVisible(true);
+		
+		//sfw = new SearchFlightWindow(this); 
+		//sfw.setVisible(true);
 		
 		
 
@@ -63,17 +72,30 @@ public class Controller {
 
 	}
 	
-	public List<Integer> getFlights(String depAirport, String arrivalAirport, String depDate) {
+	public List<FlightDTO> getFlights(String depAirport, String arrivalAirport, String depDate) {
 		
-		List<Integer> flights = new ArrayList<>();
+		List<FlightDTO> flights = new ArrayList<>(); 
+		
 		
 		try {
+			
 			flights = (rsl.getService()).getFlights(depAirport, arrivalAirport, depDate); 
+			
+			
+			
+			for (FlightDTO fDTO : flights) {
+				
+				FlightDTO f = (FlightDTO) flights.get(0); 
+				System.out.println(f.toString());
+				
+				
+			}
+		
 		}catch(Exception e) {
 			System.out.println("$ Error: " + e.getMessage());
 		}
-		
 	
+		
 		return flights;
 	}
 	
@@ -95,6 +117,8 @@ public class Controller {
 	public void makeReservation(Integer flightID, Integer numSeats, String userEmail) {
 		try{
 
+			
+			
 			(rsl.getService()).makeReservation(flightID,  numSeats,  userEmail);
 
 
@@ -105,6 +129,8 @@ public class Controller {
 		
 	}
 	
-	
+	  public static void main(String[] args) throws RemoteException {    	
+	    	new Controller(args);
+	    }
 }
 
